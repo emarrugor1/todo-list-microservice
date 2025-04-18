@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: todo-list-microservice
+  r2dbc:
+    host: "${POSTGRESQL_HOST}"
+    port: "${POSTGRESQL_PORT}"
+    database: "${POSTGRESQL_DATABASE}"
+    schema: "${POSTGRESQL_SCHEMA}"
+    username: "${POSTGRESQL_USERNAME}"
+    password: "${POSTGRESQL_PASSWORD}"

@@ -1,4 +1,4 @@
-package co.edu.emarrugo.todo_list_microservice.db.entity;
+package co.edu.emarrugo.todo_list_microservice.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,12 +17,12 @@ import java.time.LocalDateTime;
 @Table("tasks")
 public class TaskEntity {
     @Id
-    private String id;
+    private Integer id;
     private String name;
     private String description;
     private boolean completed;
     private LocalDateTime deadline;
 
     @Column("todo_list_id")
-    private String todoListId;
+    private Integer todoListId;
 }
