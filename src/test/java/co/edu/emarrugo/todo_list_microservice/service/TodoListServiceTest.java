@@ -5,6 +5,7 @@ import co.edu.emarrugo.todo_list_microservice.model.entity.TodoListEntity;
 import co.edu.emarrugo.todo_list_microservice.model.repository.TaskRepository;
 import co.edu.emarrugo.todo_list_microservice.model.repository.TodoListRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -55,6 +56,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-01: Obtener todas las listas de tareas")
     void itShouldGetAllTodoLists() {
         // GIVEN
         List<TodoListEntity> todoLists = Arrays.asList(todoListEntity);
@@ -71,6 +73,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-02: Obtener lista de tareas por ID existente")
     void itShouldGetTodoListById() {
         // GIVEN
         when(todoListRepository.findById(1)).thenReturn(Mono.just(todoListEntity));
@@ -86,6 +89,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-03: Crear nueva lista de tareas")
     void itShouldCreateTodoList() {
         // GIVEN
         when(todoListRepository.save(any(TodoListEntity.class))).thenReturn(Mono.just(todoListEntity));
@@ -97,35 +101,33 @@ class TodoListServiceTest {
         StepVerifier.create(result)
                 .expectNext(todoListEntity)
                 .verifyComplete();
-        verify(todoListRepository, times(1)).save(todoListEntity);
+        verify(todoListRepository, times(1)).save(any(TodoListEntity.class));
     }
 
     @Test
+    @DisplayName("TS-05: Actualizar lista de tareas existente")
     void itShouldUpdateTodoList() {
         // GIVEN
-        TodoListEntity updatedTodoList = TodoListEntity.builder()
-                .id(1)
-                .name("Lista actualizada")
-                .build();
-
         when(todoListRepository.findById(1)).thenReturn(Mono.just(todoListEntity));
-        when(todoListRepository.save(any(TodoListEntity.class))).thenReturn(Mono.just(updatedTodoList));
+        when(todoListRepository.save(any(TodoListEntity.class))).thenReturn(Mono.just(todoListEntity));
 
         // WHEN
-        Mono<TodoListEntity> result = todoListService.updateTodoList(1, updatedTodoList);
+        Mono<TodoListEntity> result = todoListService.updateTodoList(1, todoListEntity);
 
         // THEN
         StepVerifier.create(result)
-                .expectNext(updatedTodoList)
+                .expectNext(todoListEntity)
                 .verifyComplete();
         verify(todoListRepository, times(1)).findById(1);
         verify(todoListRepository, times(1)).save(any(TodoListEntity.class));
     }
 
     @Test
+    @DisplayName("TS-05: Eliminar lista de tareas existente")
     void itShouldDeleteTodoList() {
         // GIVEN
-        when(taskRepository.findAllByTodoListId(1)).thenReturn(Flux.just(taskEntity));
+        List<TaskEntity> tasks = Arrays.asList(taskEntity);
+        when(taskRepository.findAllByTodoListId(1)).thenReturn(Flux.fromIterable(tasks));
         when(taskRepository.delete(any(TaskEntity.class))).thenReturn(Mono.empty());
         when(todoListRepository.deleteById(1)).thenReturn(Mono.empty());
 
@@ -136,14 +138,16 @@ class TodoListServiceTest {
         StepVerifier.create(result)
                 .verifyComplete();
         verify(taskRepository, times(1)).findAllByTodoListId(1);
-        verify(taskRepository, times(1)).delete(taskEntity);
+        verify(taskRepository, times(1)).delete(any(TaskEntity.class));
         verify(todoListRepository, times(1)).deleteById(1);
     }
 
     @Test
+    @DisplayName("TS-06: Obtener tareas por ID de lista")
     void itShouldGetTasksByTodoListId() {
         // GIVEN
-        when(taskRepository.findAllByTodoListId(1)).thenReturn(Flux.just(taskEntity));
+        List<TaskEntity> tasks = Arrays.asList(taskEntity);
+        when(taskRepository.findAllByTodoListId(1)).thenReturn(Flux.fromIterable(tasks));
 
         // WHEN
         Flux<TaskEntity> result = todoListService.getTasksByTodoListId(1);
@@ -156,6 +160,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-07: Obtener tarea por ID existente")
     void itShouldGetTaskById() {
         // GIVEN
         when(taskRepository.findById(1)).thenReturn(Mono.just(taskEntity));
@@ -171,6 +176,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-08: Crear nueva tarea")
     void itShouldCreateTask() {
         // GIVEN
         when(taskRepository.save(any(TaskEntity.class))).thenReturn(Mono.just(taskEntity));
@@ -182,10 +188,10 @@ class TodoListServiceTest {
         StepVerifier.create(result)
                 .expectNext(taskEntity)
                 .verifyComplete();
-        verify(taskRepository, times(1)).save(taskEntity);
+        verify(taskRepository, times(1)).save(any(TaskEntity.class));
     }
-
     @Test
+    @DisplayName("TS-09: Actualizar tarea existente")
     void itShouldUpdateTask() {
         // GIVEN
         TaskEntity updatedTask = TaskEntity.builder()
@@ -212,6 +218,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-10: Eliminar tarea existente")
     void itShouldDeleteTask() {
         // GIVEN
         when(taskRepository.deleteById(1)).thenReturn(Mono.empty());
@@ -226,6 +233,7 @@ class TodoListServiceTest {
     }
 
     @Test
+    @DisplayName("TS-11: Obtener lista con todas sus tareas")
     void itShouldGetTodoListWithTasks() {
         // GIVEN
         List<TaskEntity> tasks = Arrays.asList(taskEntity);

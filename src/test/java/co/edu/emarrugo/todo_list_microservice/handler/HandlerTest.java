@@ -4,6 +4,7 @@ import co.edu.emarrugo.todo_list_microservice.model.entity.TaskEntity;
 import co.edu.emarrugo.todo_list_microservice.model.entity.TodoListEntity;
 import co.edu.emarrugo.todo_list_microservice.service.TodoListService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -61,6 +62,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-01: Verificar método handler para obtener todas las listas de tareas")
     void itShouldGetAllTodoLists() {
         // GIVEN
         List<TodoListEntity> todoLists = Arrays.asList(todoListEntity);
@@ -79,6 +81,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-02: Verificar método handler para obtener lista de tareas por ID")
     void itShouldGetTodoListById() {
         // GIVEN
         when(todoListService.getTodoListById(1)).thenReturn(Mono.just(todoListEntity));
@@ -96,6 +99,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-03: Verificar método handler para manejar lista no existente")
     void itShouldReturnNotFoundWhenTodoListNotExists() {
         // GIVEN
         when(todoListService.getTodoListById(1)).thenReturn(Mono.empty());
@@ -111,6 +115,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-04: Verificar método handler para crear lista de tareas")
     void itShouldCreateTodoList() {
         // GIVEN
         MockServerRequest requestWithBody = MockServerRequest.builder()
@@ -131,6 +136,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-05: Verificar método handler para actualizar lista de tareas")
     void itShouldUpdateTodoList() {
         // GIVEN
         MockServerRequest requestWithBody = MockServerRequest.builder()
@@ -152,6 +158,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-06: Verificar método handler para eliminar lista de tareas")
     void itShouldDeleteTodoList() {
         // GIVEN
         when(todoListService.deleteTodoList(1)).thenReturn(Mono.empty());
@@ -167,6 +174,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-07: Verificar método handler para obtener tareas por ID de lista")
     void itShouldGetTasksByTodoListId() {
         // GIVEN
         List<TaskEntity> tasks = Arrays.asList(taskEntity);
@@ -185,6 +193,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-08: Verificar método handler para obtener tarea por ID")
     void itShouldGetTaskById() {
         // GIVEN
         when(todoListService.getTaskById(1)).thenReturn(Mono.just(taskEntity));
@@ -202,6 +211,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-09: Verificar método handler para crear tarea")
     void itShouldCreateTask() {
         // GIVEN
         MockServerRequest requestWithBody = MockServerRequest.builder()
@@ -222,6 +232,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-10: Verificar método handler para actualizar tarea")
     void itShouldUpdateTask() {
         // GIVEN
         MockServerRequest requestWithBody = MockServerRequest.builder()
@@ -243,6 +254,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-11: Verificar método handler para eliminar tarea")
     void itShouldDeleteTask() {
         // GIVEN
         when(todoListService.deleteTask(1)).thenReturn(Mono.empty());
@@ -258,6 +270,7 @@ class HandlerTest {
     }
 
     @Test
+    @DisplayName("TH-12: Verificar método handler para obtener lista con tareas")
     void itShouldGetTodoListWithTasks() {
         // GIVEN
         List<TaskEntity> tasks = Arrays.asList(taskEntity);

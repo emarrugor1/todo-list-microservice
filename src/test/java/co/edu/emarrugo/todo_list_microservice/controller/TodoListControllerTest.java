@@ -4,6 +4,7 @@ import co.edu.emarrugo.todo_list_microservice.handler.Handler;
 import co.edu.emarrugo.todo_list_microservice.model.entity.TaskEntity;
 import co.edu.emarrugo.todo_list_microservice.model.entity.TodoListEntity;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -59,6 +60,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-01: Verificar endpoint para obtener todas las listas de tareas")
     void itShouldGetAllTodoLists() {
         // GIVEN
         List<TodoListEntity> todoLists = Arrays.asList(todoListEntity);
@@ -83,6 +85,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-02: Verificar endpoint para obtener una lista de tareas por ID")
     void itShouldGetTodoListById() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok()
@@ -105,6 +108,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-03: Verificar endpoint para crear una lista de tareas")
     void itShouldCreateTodoList() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok()
@@ -128,6 +132,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-04: Verificar endpoint para actualizar una lista de tareas")
     void itShouldUpdateTodoList() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok()
@@ -151,6 +156,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-05: Verificar endpoint para eliminar una lista de tareas")
     void itShouldDeleteTodoList() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok().build();
@@ -167,6 +173,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-06: Verificar endpoint para obtener tareas por ID de lista")
     void itShouldGetTasksByTodoListId() {
         // GIVEN
         List<TaskEntity> tasks = Arrays.asList(taskEntity);
@@ -191,6 +198,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-07: Verificar endpoint para obtener lista con sus tareas")
     void itShouldGetTodoListWithTasks() {
         // GIVEN
         List<TaskEntity> tasks = Arrays.asList(taskEntity);
@@ -220,6 +228,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-08: Verificar endpoint para obtener una tarea por ID")
     void itShouldGetTaskById() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok()
@@ -242,6 +251,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-09: Verificar endpoint para crear una tarea")
     void itShouldCreateTask() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok()
@@ -265,6 +275,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-10: Verificar endpoint para actualizar una tarea")
     void itShouldUpdateTask() {
         // GIVEN
         TaskEntity updatedTask = TaskEntity.builder()
@@ -297,6 +308,7 @@ class TodoListControllerTest {
     }
 
     @Test
+    @DisplayName("TC-11: Verificar endpoint para eliminar una tarea")
     void itShouldDeleteTask() {
         // GIVEN
         Mono<ServerResponse> responseBuilder = ServerResponse.ok().build();
